@@ -55,7 +55,7 @@ public class Welcome extends AppCompatActivity {
                         (message.equals("") ? "House Automation selected": message),
                         Snackbar.LENGTH_SHORT);
                 snack1.show();
-               // startActivity(new Intent(Welcome.this, HouseActivity.class));
+             startActivity(new Intent(Welcome.this, HouseAutomation.class));
                 return true;
 
             case R.id.action_kitchen:
