@@ -1,10 +1,8 @@
 package com.example.sangita.androidproject;
 
 
-import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.TextView;
+
 
 
 /**
@@ -26,8 +25,8 @@ public class GarageFragment extends Fragment {
     private ImageView doorImage;
     private ImageView lightImage;
     private ProgressBar progressBar;
-    private int progressBarStatus ;
-    private Handler progressBarHandler = new Handler();
+    private TextView textView;
+    //private int count =1;
 
 
     public GarageFragment() {
@@ -37,7 +36,6 @@ public class GarageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         getActivity().setTitle("Garage Automation");
     }
 
@@ -52,11 +50,12 @@ public class GarageFragment extends Fragment {
         doorImage = (ImageView) view.findViewById(R.id.garageDoorImage);
         lightImage = (ImageView) view.findViewById(R.id.garageLightImage);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        //progressBar.setProgress(0);
-        progressBar.setMax(10);
-        progressBar.setVisibility(View.VISIBLE);
-
+        textView = (TextView)view.findViewById(R.id.output);
+//        progressBar.setProgress(0);
+//        progressBar.setMax(50);
+        //textView.setText("Garage Door Closed");
         switchDoor.setChecked(false);
+
 
         //attach a listener to check for changes in state
         switchDoor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -65,37 +64,19 @@ public class GarageFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
 
-
-
-
                 if (isChecked) {
-                    progressBarStatus = 0;
-                    new Thread(new Runnable() {
-                        public void run() {
-                            while (progressBarStatus < 100) {
-                                progressBarStatus += 1;
-                                progressBarHandler.post(new Runnable() {
-                                    public void run() {
-                                        progressBar.setProgress(progressBarStatus);
-                                    }
-                                });
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
+                    progressBar.setProgress(0);
+                    progressBar.setMax(50);
+                    DoorOpenTask doorOpen = new DoorOpenTask ();
+                    doorOpen.execute(50);
 
-                    }).start();
-                    if(progressBarStatus == 100) {
-                        doorImage.setImageResource(R.drawable.garage_open);
-                        lightImage.setImageResource(R.drawable.garage_lighton);
-                    }
                 }
                 else {
-                    doorImage.setImageResource(R.drawable.garage_closed);
-                    lightImage.setImageResource(R.drawable.garage_lightoff);
+                    progressBar.setProgress(0);
+                    progressBar.setMax(50);
+                    DoorCloseTask doorClose = new DoorCloseTask();
+                    doorClose.execute(50);
+
                 }
             }
         });
@@ -115,9 +96,81 @@ public class GarageFragment extends Fragment {
             }
         });
 
-
-
         return view;
     }
+    class DoorOpenTask extends AsyncTask<Integer, Integer, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
 
+            int count =1;
+            for (; count <= params[0]; count++) {
+                try {
+                    Thread.sleep(10);
+                    publishProgress(count);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.INVISIBLE);
+            doorImage.setImageResource(R.drawable.garage_open);
+            lightImage.setImageResource(R.drawable.garage_lighton);
+            //textView.setText(result);
+            textView.setText("Garage Door Open");
+
+        }
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            textView.setText("Door Opening..."+ values[0]);
+            super.onProgressUpdate(values);
+            progressBar.setProgress(values[0]);
+        }
+    }
+    class DoorCloseTask extends AsyncTask<Integer, Integer, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            int count =1;
+            for (; count <= params[0]; count++) {
+                try {
+                    Thread.sleep(10);
+                    publishProgress(count);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.INVISIBLE);
+            doorImage.setImageResource(R.drawable.garage_closed);
+            lightImage.setImageResource(R.drawable.garage_lightoff);
+            //textView.setText(result);
+            textView.setText("Garage Door Close");
+            // btn.setText("Restart");
+        }
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            textView.setText("Door Closing..."+ values[0]);
+            super.onProgressUpdate(values);
+            progressBar.setProgress(values[0]);
+        }
+    }
 }
+
+
+
+

@@ -22,6 +22,8 @@
             android:name=".HouseAutomation"
             android:label="@string/title_activity_house_automation"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
     </application>
 
 </manifest>

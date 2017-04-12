@@ -9,4 +9,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="garage_door"> Garage Door</string>
     <string name="garage_light"> Garage Light</string>
+    <string name="input_time_hint"> Enter Time Here</string>
+    <string name="input_temp_hint"> Enter Temperature Here </string>
+    <string name="set_house_temp">  Save Tempertaure </string>
 </resources>

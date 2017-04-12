@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import java.util.Calendar;
@@ -37,7 +38,7 @@ import java.util.Calendar;
 public class IndoorTempFragment extends Fragment {
 
     static EditText inputTime;
-
+    static EditText  inputTemp;
 
     public IndoorTempFragment() {
         // Required empty public constructor
@@ -57,7 +58,7 @@ public class IndoorTempFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_indoor_temp, container, false);
 
         inputTime = (EditText) view.findViewById(R.id.input_time);
-
+        inputTemp = (EditText) view.findViewById(R.id.input_temp);
 
         inputTime.setOnClickListener(new View.OnClickListener() {
 
@@ -65,6 +66,22 @@ public class IndoorTempFragment extends Fragment {
             public void onClick(View v) {
                 showTimePickerDialog(v);
                 showDatePickerDialog(v);
+            }
+        });
+
+        NumberPicker numberPicker = (NumberPicker)view.findViewById(R.id.numberpicker);
+        numberPicker.setMaxValue(60);
+        numberPicker.setMinValue(10);
+        numberPicker.setWrapSelectorWheel(true);
+        //numberPicker.setFocusable(true);
+        //numberPicker.setFocusableInTouchMode(true);
+        numberPicker.setOnValueChangedListener( new NumberPicker.
+                OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int
+                    oldVal, int newVal) {
+                inputTemp.setText("Selected temperature is "+
+                        newVal);
             }
         });
 

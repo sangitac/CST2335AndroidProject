@@ -7,56 +7,75 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <!-- Garage door -->
+
+    <!-- Garage light -->
+
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/garageAutomation"
         android:src="@drawable/garage_automation"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center_horizontal"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="52dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/garage_door_switch" />
+        android:layout_centerHorizontal="true" />
 
-    <!-- Garage door -->
     <Switch
 
         android:text="@string/garage_door"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/garage_door_switch"
-        android:layout_below="@+id/garageAutomation"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp" />
+        android:layout_above="@+id/garage_light_switch"
+        android:layout_toStartOf="@+id/garageAutomation"
+        android:layout_marginEnd="11dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/garageDoorImage"
-        android:src="@drawable/garage_open"
-        android:layout_alignBottom="@+id/garage_door_switch"
-        android:layout_alignEnd="@+id/garageAutomation"
-        />
-
-    <!-- Garage light -->
-    <Switch
-        android:text="@string/garage_light"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:id="@+id/garage_light_switch"
-        android:layout_below="@+id/garage_door_switch"
-        android:layout_alignStart="@+id/garage_door_switch"
-        android:layout_marginTop="49dp" />
+        android:src="@drawable/garage_closed"
+        android:layout_marginLeft="300dp"
+        android:layout_marginStart="53dp"
+        android:layout_below="@+id/garageAutomation"
+        android:layout_toEndOf="@+id/garageAutomation" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/garageLightImage"
-        android:src="@drawable/garage_lighton"
+        android:src="@drawable/garage_lightoff"
         android:layout_alignBottom="@+id/garage_light_switch"
         android:layout_alignStart="@+id/garageDoorImage"
         />
 
+    <Switch
+        android:text="@string/garage_light"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/garage_light_switch"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/garageDoorImage"
+        android:layout_alignStart="@+id/garage_door_switch" />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/garage_light_switch"
+        android:layout_alignParentStart="true" />
+
+    <TextView android:id="@+id/output"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF8A80"
+        android:textSize="20sp"
+        android:layout_below="@+id/progressBar"
+     />
 
 </RelativeLayout>
