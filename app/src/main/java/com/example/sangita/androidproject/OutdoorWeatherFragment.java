@@ -62,7 +62,7 @@ public class OutdoorWeatherFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_outdoor_weather, container, false);
 
-        //Hide the floating action button from fragment another one 
+        //Hide the floating action button from fragment another one
 //        FloatingActionButton floatingActionButton = ((HouseAutomation) getActivity()).getFloatingActionButton();
 //        floatingActionButton.hide();
 
