@@ -80,6 +80,7 @@
         android:layout_toRightOf="@+id/textView2"
         android:layout_above="@+id/save_temp_Button"
         android:layout_below="@+id/input_time"
+
      />
 
 </RelativeLayout>

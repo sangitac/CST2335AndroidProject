@@ -87,14 +87,8 @@ public class IndoorTempFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_indoor_temp, container, false);
         View view = inflater.inflate(R.layout.fragment_indoor_temp, container, false);
 
-       // ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
-        //Hide the floating action button from fragment
-//        FloatingActionButton floatingActionButton = ((HouseAutomation) getActivity()).getFloatingActionButton();
-//        floatingActionButton.hide();
 
         //Hide the image from fragment
         ImageView houseImage = ((HouseAutomation)getActivity()).getHouseImage();
@@ -122,9 +116,7 @@ public class IndoorTempFragment extends Fragment {
          After opening the database, execute a query for any existing temperature settings and
          add them into the ArrayList of schedules
          */
-//        Cursor cursor = db.query( TempDatabaseHelper.TABLE_NAME,
-//                new String[] { TempDatabaseHelper.DATE_TIME,TempDatabaseHelper.TEMPERATURE},
-//                null, null, null, null, null, null);
+
         cursor = db.query( TempDatabaseHelper.TABLE_NAME,
                 new String[] { TempDatabaseHelper.KEY_ID,TempDatabaseHelper.DATE_TIME,TempDatabaseHelper.TEMPERATURE},
                 null, null, null, null, null, null);
@@ -137,7 +129,7 @@ public class IndoorTempFragment extends Fragment {
             Log.i(ACTIVITY_NAME, "SQL MESSAGE:" + schedule);
             cursor.moveToNext();
         }
-        cursor.close();
+       // cursor.close();
 
           temperatureAdapter = new TempAdapter(getActivity());
           tempListview.setAdapter(temperatureAdapter);
@@ -180,7 +172,6 @@ public class IndoorTempFragment extends Fragment {
         });
 
 
-
         tempListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -190,7 +181,7 @@ public class IndoorTempFragment extends Fragment {
                         tempScheduleList.get(position).toString(),
                         Toast.LENGTH_LONG).show();
 
-                idToDelete = temperatureAdapter.getItemId(position);
+                idToDelete = id;
                 positionID = position;
 
                 //  IndoorTempFragment.this.position = position;
@@ -228,7 +219,7 @@ public class IndoorTempFragment extends Fragment {
         });
 
         NumberPicker numberPicker = (NumberPicker)view.findViewById(R.id.numberpicker);
-        numberPicker.setMaxValue(60);
+        numberPicker.setMaxValue(40);
         numberPicker.setMinValue(10);
         numberPicker.setWrapSelectorWheel(true);
         //numberPicker.setFocusable(true);
@@ -242,9 +233,35 @@ public class IndoorTempFragment extends Fragment {
             }
         });
 
-
         return view;
     }
+
+    private void removeItem(int position) {
+        db.delete(TempDatabaseHelper.TABLE_NAME, TempDatabaseHelper.KEY_ID + "=" + String.valueOf(idToDelete), null);
+        tempScheduleList.remove(positionID);
+        temperatureAdapter.notifyDataSetChanged();
+    }
+
+    public long getItemId(int position) {
+        cursor.moveToPosition(position);
+        return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
+    }
+
+    public void updateList(){
+        temperatureAdapter.notifyDataSetChanged();
+    }
+
+    //    public void reload()
+//    {
+//        tempDbHelper = new TempDatabaseHelper(getActivity());
+//        db =   tempDbHelper .getWritableDatabase();
+//        temperatureAdapter = new TempAdapter(getActivity());
+//        tempListview.setAdapter(temperatureAdapter);
+//        if(temperatureAdapter!= null)
+//            temperatureAdapter.notifyDataSetChanged();
+//    }
+
+
     private boolean isValidTemp(String s) {
         try {
             int value = Integer.parseInt(s);
@@ -259,27 +276,10 @@ public class IndoorTempFragment extends Fragment {
             return false;
         }
     }
-    private void removeItem(int position) {
-        db.delete(TempDatabaseHelper.TABLE_NAME, TempDatabaseHelper.KEY_ID + "=" + String.valueOf(idToDelete), null);
-        tempScheduleList.remove(positionID);
-        temperatureAdapter.notifyDataSetChanged();
-    }
-
-    public long getItemId(int position) {
-        cursor.moveToPosition(position);
-        return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
-    }
 
 
-//    public void reload()
-//    {
-//        tempDbHelper = new TempDatabaseHelper(getActivity());
-//        db =   tempDbHelper .getWritableDatabase();
-//        temperatureAdapter = new TempAdapter(getActivity());
-//        tempListview.setAdapter(temperatureAdapter);
-//        if(temperatureAdapter!= null)
-//            temperatureAdapter.notifyDataSetChanged();
-//    }
+
+
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
@@ -361,6 +361,10 @@ public class IndoorTempFragment extends Fragment {
             this.context = getActivity();
         }
 
+        public long getItemId(int position)
+        {
+            cursor.moveToPosition(position); return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
+        }
 
         public int getCount() {
             return tempScheduleList.size();
