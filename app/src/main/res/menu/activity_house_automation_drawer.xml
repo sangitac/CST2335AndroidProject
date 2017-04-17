@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_garage"
+            android:icon="@drawable/garage"
+            android:title="Garage" />
+        <item
+            android:id="@+id/nav_indoortemperature"
+            android:icon="@drawable/indoor_temperature"
+            android:title="Indoor Temperature" />
+        <item
+            android:id="@+id/nav_outsideweather"
+            android:icon="@drawable/outside_weather"
+            android:title="Outside Weather" />
+
+    </group>
+
+
+</menu>

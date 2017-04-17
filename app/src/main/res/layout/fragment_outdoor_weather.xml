@@ -5,12 +5,57 @@
     tools:context="com.example.sangita.androidproject.OutdoorWeatherFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Outdoor Weather Fragment" />
+        android:text="Current  Temperature "
+        android:id="@+id/currentWeather"
+        android:layout_alignTop="@+id/weatherImage"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/weatherImage"
+        android:paddingBottom="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum Temperature "
+        android:id="@+id/maxTemp"
+        android:layout_toEndOf="@+id/weatherImage"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/currentWeather"
+        android:layout_toRightOf="@+id/weatherImage"
+        android:paddingBottom="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minimum Temperature "
+        android:id="@+id/minTemp"
+        android:layout_below="@+id/maxTemp"
+        android:layout_toEndOf="@+id/weatherImage"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/weatherImage"
+        android:paddingBottom="30dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weatherImage"
+        android:minHeight="200dp"
+        android:minWidth="200dp"
+        android:paddingRight="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="86dp" />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_marginBottom="76dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

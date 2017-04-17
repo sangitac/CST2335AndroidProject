@@ -1,11 +1,19 @@
 package com.example.sangita.androidproject;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -13,7 +21,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import static android.view.View.GONE;
 
 
 /**
@@ -40,17 +50,30 @@ public class GarageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,@Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_garage, container, false);
+
+        //Hide the floating action button from fragment
+        //FloatingActionButton floatingActionButton = ((HouseAutomation) getActivity()).getFloatingActionButton();
+       // floatingActionButton.hide();
+
+        //Hide the image from fragment
+        ImageView houseImage = ((HouseAutomation)getActivity()).getHouseImage();
+        houseImage.setVisibility(View.GONE);
+
+        Toast toast = Toast.makeText(getActivity(), "You are in Temperature Setting", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 200);
+        toast.show();
+
 
         switchDoor = (Switch) view.findViewById(R.id.garage_door_switch);
         switchLight = (Switch) view.findViewById(R.id.garage_light_switch);
         doorImage = (ImageView) view.findViewById(R.id.garageDoorImage);
         lightImage = (ImageView) view.findViewById(R.id.garageLightImage);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        textView = (TextView)view.findViewById(R.id.output);
+        textView = (TextView) view.findViewById(R.id.output);
 //        progressBar.setProgress(0);
 //        progressBar.setMax(50);
         //textView.setText("Garage Door Closed");
@@ -67,11 +90,10 @@ public class GarageFragment extends Fragment {
                 if (isChecked) {
                     progressBar.setProgress(0);
                     progressBar.setMax(50);
-                    DoorOpenTask doorOpen = new DoorOpenTask ();
+                    DoorOpenTask doorOpen = new DoorOpenTask();
                     doorOpen.execute(50);
 
-                }
-                else {
+                } else {
                     progressBar.setProgress(0);
                     progressBar.setMax(50);
                     DoorCloseTask doorClose = new DoorCloseTask();
@@ -98,11 +120,12 @@ public class GarageFragment extends Fragment {
 
         return view;
     }
+
     class DoorOpenTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
 
-            int count =1;
+            int count = 1;
             for (; count <= params[0]; count++) {
                 try {
                     Thread.sleep(10);
@@ -113,6 +136,7 @@ public class GarageFragment extends Fragment {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.INVISIBLE);
@@ -122,22 +146,25 @@ public class GarageFragment extends Fragment {
             textView.setText("Garage Door Open");
 
         }
+
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
+
         @Override
         protected void onProgressUpdate(Integer... values) {
-            textView.setText("Door Opening..."+ values[0]);
+            textView.setText("Door Opening..." + values[0]);
             super.onProgressUpdate(values);
             progressBar.setProgress(values[0]);
         }
     }
+
     class DoorCloseTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
-            int count =1;
+            int count = 1;
             for (; count <= params[0]; count++) {
                 try {
                     Thread.sleep(10);
@@ -148,6 +175,7 @@ public class GarageFragment extends Fragment {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.INVISIBLE);
@@ -157,20 +185,18 @@ public class GarageFragment extends Fragment {
             textView.setText("Garage Door Close");
             // btn.setText("Restart");
         }
+
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
+
         @Override
         protected void onProgressUpdate(Integer... values) {
-            textView.setText("Door Closing..."+ values[0]);
+            textView.setText("Door Closing..." + values[0]);
             super.onProgressUpdate(values);
             progressBar.setProgress(values[0]);
         }
     }
 }
-
-
-
-

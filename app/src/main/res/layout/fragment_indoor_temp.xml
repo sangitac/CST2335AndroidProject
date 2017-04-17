@@ -1,10 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_indoor_temperature"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.sangita.androidproject.IndoorTempFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <DigitalClock
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textSize="20sp"/>
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,17 +50,17 @@
         android:layout_below="@+id/input_temp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:id="@+id/save"
+        android:id="@+id/save_temp_Button"
         android:onClick = "temperatureListView"/>
 
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/save"
+        android:layout_below="@+id/save_temp_Button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:id="@+id/temp_data_listview"
+        android:id="@+id/temperature_Listview"
         android:background="@android:color/darker_gray"
         android:textSize="20sp"
         android:typeface="monospace"
@@ -70,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textView2"
-        android:layout_above="@+id/save"
+        android:layout_above="@+id/save_temp_Button"
         android:layout_below="@+id/input_time"
      />
 

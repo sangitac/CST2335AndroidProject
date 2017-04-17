@@ -12,13 +12,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.sangita.androidproject.Welcome"
     tools:showIn="@layout/activity_welcome">
+    <!--
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Welcome to Smart Home !"
+          style="?android:attr/textAppearanceLarge"
+          android:id="@+id/welcome_text"
+          />
+          -->
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_centerHorizontal="true"
+          android:id="@+id/app_Image" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Smart Home !"
-        style="?android:attr/textAppearanceLarge"
-        android:id="@+id/welcome_text"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+  </RelativeLayout>

@@ -12,4 +12,14 @@
     <string name="input_time_hint"> Enter Time Here</string>
     <string name="input_temp_hint"> Enter Temperature Here </string>
     <string name="set_house_temp">  Save Tempertaure </string>
+    <string name="ok">Yes?</string>
+    <string name="cancel">No?</string>
+    <string name="setting_header"><p> How to run the <b>Automation Application</b>  </p>
+                               </string>
+    <string name="setting_body"><p> # Click the <i> menu icon </i> on the left side
+                                of menu bar will open a item list  of the left.</p>
+                              <p> # Click on any <i> menu icon </i> will show its detailed status in a new page.</p>
+                              <p>  # click on the <i> icons on menu bar </i> will help u switch between the activities</p>
+                              <p> # <i> Back button </i> in bottom will take you to main application page. </p>
+                               </string>
 </resources>

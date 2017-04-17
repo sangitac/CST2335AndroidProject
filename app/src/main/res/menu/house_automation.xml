@@ -1,27 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.sangita.androidproject.Welcome">
-
-    <item  android:title="house"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="house"
         android:id="@+id/action_house"
         android:icon="@drawable/house"
         android:orderInCategory="101"
         app:showAsAction="always" />
 
-    <item android:title="kitchen"
+    <item
+        android:title="kitchen"
         android:id="@+id/action_kitchen"
         android:icon="@drawable/kitchen"
         android:orderInCategory="102"
         app:showAsAction="always" />
 
-    <item android:title="automobile"
+    <item
+        android:title="automobile"
         android:id="@+id/action_automobile"
         android:icon="@drawable/automobile"
         android:orderInCategory="103"
         app:showAsAction="always" />
 
-    <item android:title="livingroom"
+    <item
+        android:title="livingroom"
         android:id="@+id/action_livingroom"
         android:icon="@drawable/livingroom"
         android:orderInCategory="104"
