@@ -3,6 +3,7 @@ package com.example.sangita.androidproject;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ public class HouseAutomation extends AppCompatActivity
     private final String ACTIVITY_NAME = "HouseAutomation";
     private String message = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class HouseAutomation extends AppCompatActivity
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -140,11 +143,11 @@ public class HouseAutomation extends AppCompatActivity
             case R.id.action_house:
                 Log.d(ACTIVITY_NAME, "House Selected");
                 //show a snackbar
-                Snackbar snack1 = Snackbar.make(findViewById(android.R.id.content),
+                Snackbar snack1 = Snackbar.make(findViewById(R.id.myCoordinatorLayout),
                         (message.equals("") ? "House Automation selected": message),
                         Snackbar.LENGTH_SHORT);
                 snack1.show();
-                startActivity(new Intent(this, HouseAutomation.class));
+                //startActivity(new Intent(this, HouseAutomation.class));
                 return true;
 
             case R.id.action_kitchen:

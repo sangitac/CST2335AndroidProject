@@ -63,7 +63,7 @@ public class GarageFragment extends Fragment {
         ImageView houseImage = ((HouseAutomation)getActivity()).getHouseImage();
         houseImage.setVisibility(View.GONE);
 
-        Toast toast = Toast.makeText(getActivity(), "You are in Temperature Setting", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), "You are in Garage Setting", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0, 200);
         toast.show();
 

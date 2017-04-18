@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -163,10 +164,12 @@ public class IndoorTempFragment extends Fragment {
                     Toast.makeText(getActivity(), "Temperature Schedule saved!", Toast.LENGTH_LONG).show();
 
                     temperatureAdapter.notifyDataSetChanged();
+                    reload(IndoorTempFragment.this);
 
                     // make chat window blank after temperature setting added
                     inputTime.setText("");
                     inputTemp.setText("");
+
                 }
             }
         });
@@ -181,7 +184,8 @@ public class IndoorTempFragment extends Fragment {
                         tempScheduleList.get(position).toString(),
                         Toast.LENGTH_LONG).show();
 
-                idToDelete = id;
+                //idToDelete = id;
+                idToDelete = temperatureAdapter.getItemId(position);
                 positionID = position;
 
                 //  IndoorTempFragment.this.position = position;
@@ -194,9 +198,12 @@ public class IndoorTempFragment extends Fragment {
                         .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                removeItem( positionID);
-                                //onResume();
-                            }
+
+                                tempScheduleList.remove(positionID);
+                                db.delete(TempDatabaseHelper.TABLE_NAME, TempDatabaseHelper.KEY_ID + "=" + String.valueOf(idToDelete), null);
+                                temperatureAdapter.notifyDataSetChanged();
+                                reload(IndoorTempFragment.this);
+                        }
 
                         })
                         .setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -205,6 +212,7 @@ public class IndoorTempFragment extends Fragment {
                             }
                         })
                         .show();
+
             }
         });
 
@@ -236,30 +244,18 @@ public class IndoorTempFragment extends Fragment {
         return view;
     }
 
-    private void removeItem(int position) {
-        db.delete(TempDatabaseHelper.TABLE_NAME, TempDatabaseHelper.KEY_ID + "=" + String.valueOf(idToDelete), null);
-        tempScheduleList.remove(positionID);
-        temperatureAdapter.notifyDataSetChanged();
-    }
+//        private void removeItem() {
+//        db.delete(TempDatabaseHelper.TABLE_NAME, TempDatabaseHelper.KEY_ID + "=" + String.valueOf(idToDelete), null);
+//        tempScheduleList.remove(positionID);
+//        temperatureAdapter.notifyDataSetChanged();
+//    }
 
-    public long getItemId(int position) {
-        cursor.moveToPosition(position);
-        return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
-    }
+
 
     public void updateList(){
         temperatureAdapter.notifyDataSetChanged();
     }
 
-    //    public void reload()
-//    {
-//        tempDbHelper = new TempDatabaseHelper(getActivity());
-//        db =   tempDbHelper .getWritableDatabase();
-//        temperatureAdapter = new TempAdapter(getActivity());
-//        tempListview.setAdapter(temperatureAdapter);
-//        if(temperatureAdapter!= null)
-//            temperatureAdapter.notifyDataSetChanged();
-//    }
 
 
     private boolean isValidTemp(String s) {
@@ -330,9 +326,9 @@ public class IndoorTempFragment extends Fragment {
             int minute = c.get(Calendar.MINUTE);
 
 
-            // Create a new instance of TimePickerDialog and return it
-           // return new TimePickerDialog(getActivity(), this, hour, minute,
-            //DateFormat.is24HourFormat(getActivity()));
+            /*
+              Create a new instance of TimePickerDialog and return it
+             */
 
             TimePickerDialog pickerDialog = new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
@@ -363,7 +359,8 @@ public class IndoorTempFragment extends Fragment {
 
         public long getItemId(int position)
         {
-            cursor.moveToPosition(position); return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
+            cursor.moveToPosition(position);
+            return cursor.getLong(cursor.getColumnIndex(TempDatabaseHelper.KEY_ID));
         }
 
         public int getCount() {
@@ -393,13 +390,18 @@ public class IndoorTempFragment extends Fragment {
     @Override
     public  void onResume(){
         super.onResume();
-//       IndoorTempFragment fragment = (IndoorTempFragment) getFragmentManager()
-//                .findFragmentById(R.id.content_indoor_temperature);
-//        if (fragment != null) {
-//            fragment.reload();
-//            if (temperatureAdapter != null)
-//                temperatureAdapter.notifyDataSetChanged();
-//        }
+            if (temperatureAdapter != null)
+                temperatureAdapter.notifyDataSetChanged();
+
+    }
+
+
+    public void reload(Fragment fragment){
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(fragment);
+        ft.attach(fragment);
+        ft.commit();
     }
 
 

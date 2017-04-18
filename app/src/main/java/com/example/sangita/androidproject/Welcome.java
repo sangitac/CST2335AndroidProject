@@ -90,9 +90,9 @@ public class Welcome extends AppCompatActivity {
             case R.id.action_house:
                 Log.d(ACTIVITY_NAME, "House Selected");
                 //show a snackbar
-                Snackbar snack1 = Snackbar.make(findViewById(android.R.id.content),
+                Snackbar snack1 = Snackbar.make(findViewById(R.id.welcomeCoordinatorLayout),
                         (message.equals("") ? "House Automation selected": message),
-                        Snackbar.LENGTH_SHORT);
+                 Snackbar.LENGTH_SHORT);
                 snack1.show();
                 startActivity(new Intent(Welcome.this, HouseAutomation.class));
                 return true;
